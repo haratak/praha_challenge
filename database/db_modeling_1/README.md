@@ -15,11 +15,12 @@
 | 1のみ | `\|\|--` |
 | 1以上 | `}\|--` |
 
-![ERD](db_modeling_1.png)
+![ERD](issues_1/db_modeling_1.png)
 ## issues_2
 - 変更点は以下
   - シャリの大中小などはメニューに対するオプションとし `MenuOptions` テーブルを追加、あわせて `OrderDetails` のスキーマを更新
   - メニューの属性を管理する `type` を `Menus` に追加
-![ERD](db_modeling_2.png)
+
+![ERD](issues_2/db_modeling_2.png)
 ## issues_3
 - 発注や在庫管理の観点から、セットメニューも含む実際に売り出されたネタの個数
