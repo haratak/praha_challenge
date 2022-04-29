@@ -1,0 +1,41 @@
+@startuml db_modeling_1 
+title 
+db_modeling_1
+end title
+
+entity Orders {
+    * order_id int
+    --
+    * customer_name text
+    * customer_phone_number text
+    * paid_flg boolean
+    tax_id(FK) int
+}
+entity OrderDetails{
+    * id int
+    --
+    * order_id(FK) int
+    * menu_id(FK) int
+    * quantity int
+    * without_wasabi_count int
+}
+entity Menus{
+    * menu_id int
+    --
+    * name text
+    * amount int
+}
+entity Taxes{
+    * tax_id int 
+    --
+    * rate real
+}
+
+Orders ||--|{ OrderDetails
+Taxes ||-|| Orders
+OrderDetails ||--|| Menus
+note right of Orders : - 金額は算出するものとし永続化しない\n- 顧客データは正規化しない(顧客情報について参照)\n- 支払い前にレコードが作成されることから、tax_id は null 許容とする 
+note right of OrderDetails : - without_wasabi_count はサビぬきの皿数を int 型でカウントする(default:0) 
+note right of Menus : - amount は税抜価格
+
+@enduml

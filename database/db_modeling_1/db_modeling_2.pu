@@ -1,0 +1,50 @@
+@startuml db_modeling_2 
+title 
+db_modeling_2
+end title
+
+entity Orders {
+    * order_id int
+    --
+    * customer_name text
+    * customer_phone_number text
+    * paid_flg boolean
+    tax_id(FK) int
+}
+entity OrderDetails{
+    * id int
+    --
+    * order_id(FK) int
+    * menu_id(FK) int
+    * menu_option_id(FK) int
+    * quantity int
+    * without_wasabi_count int
+}
+entity Menus{
+    * menu_id int
+    --
+    * type enum
+    * name text
+    * amount int
+}
+
+entity MenuOptions{
+    * menu_option_id int
+    --
+    * name text
+}
+
+entity Taxes{
+    * tax_id int 
+    --
+    * rate real
+}
+
+Orders ||--|{ OrderDetails
+Taxes ||-|| Orders
+MenuOptions ||-|| OrderDetails
+OrderDetails ||--|| Menus
+note bottom of MenuOptions : - name にはオプションを登録(シャリ大、中、小...etc)\n- order details は option ごとに区別するため\nサビぬきの情報は MenuOptions に含めない 
+note right of Menus : - メニューの属性を管理する type を enum 型で追加\n変更容易性を考慮し boolean は使用しない
+
+@enduml
