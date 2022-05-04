@@ -3,39 +3,39 @@ title
 db_modeling_1
 end title
 
-entity Orders {
-    * order_id int
+entity 注文 {
+    消費税コード(FK)
+    注文コード
     --
-    * customer_name text
-    * customer_phone_number text
-    * paid_flg boolean
-    tax_id(FK) int
+    顧客名 
+    顧客電話番号 
+    支払済
 }
-entity OrderDetails{
-    * id int
+entity 注文詳細 {
+    id
     --
-    * order_id(FK) int
-    * menu_id(FK) int
-    * quantity int
-    * without_wasabi_count int
+    order_id(FK)
+    menu_id(FK)
+    quantity
+    without_wasabi_count
 }
-entity Menus{
-    * menu_id int
+entity {
+    menu_id
     --
-    * name text
-    * amount int
+    name
+    amount
 }
-entity Taxes{
-    * tax_id int 
+entity 消費税{
+    消費税コード 
     --
-    * rate real
+    税率 
 }
 
-Orders ||--|{ OrderDetails
-Taxes ||-|| Orders
-OrderDetails ||--|| Menus
-note right of Orders : - 金額は算出するものとし永続化しない\n- 顧客データは正規化しない(顧客情報について参照)\n- 支払い前にレコードが作成されることから、tax_id は null 許容とする 
-note right of OrderDetails : - without_wasabi_count はサビぬきの皿数を int 型でカウントする(default:0) 
+注文 ||--|{ 注文詳細
+消費税 ||-||注文  
+注文詳細 ||--|| Menus
+note right of 注文 : - 金額は算出するものとし永続化しない\n- 顧客データは正規化しない(顧客情報について参照)\n- 支払い前にレコードが作成されることから、tax_id は null 許容とする 
+note right of 注文詳細 : - without_wasabi_count はサビぬきの皿数を int 型でカウントする(default:0) 
 note right of Menus : - amount は税抜価格
 
 @enduml
